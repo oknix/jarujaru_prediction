@@ -1,3 +1,5 @@
+# 参考: https://qiita.com/NakaokaRei/items/06f6fa98714aaa649810#fn5
+
 import os
 import time
 import requests
