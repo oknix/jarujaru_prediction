@@ -2,7 +2,7 @@
 
 import pickle
 import sys
-import analysis
+import utils.manalysis as analysis
 import pandas as pd
 from gensim import corpora
 from gensim.corpora import Dictionary
