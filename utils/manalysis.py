@@ -32,10 +32,10 @@ def vec2dense(vec, num_terms):
 
 
 if __name__ == "__main__":
-    df = pd.read_csv('data/jarujaru_norm.csv')
+    df = pd.read_csv('../data/jarujaru_norm.csv')
     words = get_words(df['title']) #ここに形態素解析されたタイトル入る
 
     # 辞書を作る
     dictionary = corpora.Dictionary(words)
     dictionary.filter_extremes(no_below=2, keep_tokens=['チャラ','男','番長'])
-    dictionary.save('data/jarujaru.dict')
+    dictionary.save('../data/jarujaru.dict')
