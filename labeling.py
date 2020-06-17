@@ -13,6 +13,6 @@ for row, item in df.iterrows():
             label = 1
         elif item['viewCount'] < 100000:
             label = 0
-        info.extend([[title, item['viewCount'], item['likeCount'], item['dislikeCount'], item['commentCount'], label]])
+        info.extend([[title, item['viewCount'], item['publishedAt'], item['likeCount'], item['dislikeCount'], item['commentCount'], label]])
 
-pd.DataFrame(info, columns=['title', 'viewCount', 'likeCount', 'dislikeCount', 'commentCount', 'label']).to_csv('data/jarujaru_norm.csv')
+pd.DataFrame(info, columns=['title', 'viewCount', 'publishedAt', 'likeCount', 'dislikeCount', 'commentCount', 'label']).to_csv('data/jarujaru_norm.csv')
