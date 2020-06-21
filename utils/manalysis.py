@@ -6,9 +6,14 @@ import MeCab
 from gensim import corpora
 from gensim import matutils
 
-mecab = MeCab.Tagger('mecabrc')
+# mecab = MeCab.Tagger('mecabrc')
+# NEologdを使用
+mecab = MeCab.Tagger('-d /usr/local/lib/mecab/dic/mecab-ipadic-neologd')
 
-#形態素解析をして、名詞だけ取り出す
+# 辞書に含めない単語
+NG_WORDS = ["奴"]
+
+#タイトルを形態素解析をして、名詞、形容詞、動詞だけ取り出す
 def tokenize(text):
     node = mecab.parseToNode(text)
     while node:
@@ -16,16 +21,16 @@ def tokenize(text):
             yield node.surface.lower()
         node = node.next
 
-#記事群のdictについて、形態素解析をしてリストに返す
+#各タイトルについて、形態素解析した結果をリストで返す
 def get_words(contents):
     ret = []
     for  content in contents:
         ret.append(get_words_main(content))
     return ret
 
-#一つの記事を形態素解析して返す
+#必要な単語を取得 NG_WORDSは含めない
 def get_words_main(content):
-    return [token for token in tokenize(content)]
+    return [token for token in tokenize(content) if token not in NG_WORDS]
 
 def vec2dense(vec, num_terms):
     return list(matutils.corpus2dense([vec], num_terms=num_terms).T[0])
@@ -34,7 +39,7 @@ def vec2dense(vec, num_terms):
 if __name__ == "__main__":
     df = pd.read_csv('../data/jarujaru_norm.csv')
     words = get_words(df['title']) #ここに形態素解析されたタイトル入る
-
+    # print(words)
     # 辞書を作る
     dictionary = corpora.Dictionary(words)
     dictionary.filter_extremes(no_below=2, keep_tokens=['チャラ','男','番長'])
