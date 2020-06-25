@@ -7,7 +7,7 @@ import requests
 from tqdm import tqdm
 import pandas as pd
 
-API_KEY = os.environ['API_KEY']
+API_KEY = ''
 CHANNEL_ID = 'UChwgNUWPM-ksOP3BbfQHS5Q'
 
 base_url = 'https://www.googleapis.com/youtube/v3'
@@ -15,7 +15,7 @@ url = base_url + '/search?key=%s&channelId=%s&part=snippet,id&maxResults=50&orde
 infos = []
 
 while True:
-    time.sleep(20)
+    time.sleep(60)
     response = requests.get(url % (API_KEY, CHANNEL_ID))
     if response.status_code != 200:
         print('error')
@@ -59,7 +59,7 @@ while not end_flag:
 
 stats = []
 for block in tqdm(video_ids_per_block):
-    time.sleep(20)
+    time.sleep(60)
     response = requests.get(stat_url % (API_KEY, block))
     if response.status_code != 200:
         print('error')
@@ -70,4 +70,4 @@ for block in tqdm(video_ids_per_block):
 stasas = pd.DataFrame(stats)
 # videos = pd.read_csv('videos.csv')
 # stasas = pd.read_csv('stats.csv')
-pd.merge(videos, stasas, left_index=True, right_index=True).to_csv('data/jarujaru_data.csv')
+pd.merge(videos, stasas, left_index=True, right_index=True).to_csv('data/jarujaru_data3.csv')
